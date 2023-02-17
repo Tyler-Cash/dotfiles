@@ -1,0 +1,18 @@
+[user]
+	email = 12643375+Tyler-Cash@users.noreply.github.com
+	name = Tyler
+
+[includeIf "gitdir:~/work/"]
+	path = ~/.gitconfig-work
+[push]
+	followTags = true
+	autoSetupRemote = true
+	default = current
+[branch]
+	autosetuprebase = always
+[pull]
+	rebase = true
+[fetch]
+	prune = true
+[diff]
+	colorMoved = zebra

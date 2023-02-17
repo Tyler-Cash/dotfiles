@@ -1,0 +1,51 @@
+antigen use oh-my-zsh
+
+antigen bundle alias-finder
+antigen bundle autojump
+antigen bundle callvim
+antigen bundle command-not-found
+antigen bundle common-aliases
+antigen bundle completion
+antigen bundle copyfile
+antigen bundle djui/alias-tips
+antigen bundle direnv
+antigen bundle docker
+antigen bundle extract
+antigen bundle fancy-ctrl-z
+antigen bundle fzf
+antigen bundle gcloud
+antigen bundle genpass
+antigen bundle git
+antigen bundle git-escape-magic
+antigen bundle git-auto-fetch
+antigen bundle git-extras
+antigen bundle gitignore
+antigen bundle helm
+antigen bundle history
+antigen bundle kubectl
+antigen bundle last-working-dir
+antigen bundle mix-fast
+antigen bundle percol
+antigen bundle safe-paste
+antigen bundle shell-proxy
+antigen bundle singlechar
+antigen bundle ssh-agent
+antigen bundle stern
+antigen bundle sudo
+antigen bundle task
+antigen bundle terraform
+antigen bundle thefuck
+antigen bundle ubuntu
+antigen bundle velero
+antigen bundle vscode
+antigen bundle web-search
+antigen bundle zsh-autosuggestions
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+antigen apply
