@@ -11,3 +11,5 @@ sudo apt install -y build-essential procps curl file git fzf autojump git-extras
 pip3 install thefuck --user
 sudo pip install percol
 
+sudo update-locale LANG=en_US.UTF-8
+
