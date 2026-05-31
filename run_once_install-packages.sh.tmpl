@@ -30,6 +30,10 @@ if [[ -f "$sdkman_config" ]] && grep -q 'sdkman_auto_env=false' "$sdkman_config"
   sed -i '' 's/sdkman_auto_env=false/sdkman_auto_env=true/' "$sdkman_config"
 fi
 
+# Fix zsh compinit "insecure directories" warning from Homebrew share permissions
+chmod go-w '/opt/homebrew/share'
+chmod -R go-w '/opt/homebrew/share/zsh'
+
 # Install Java LTS versions (21 and 25) via sdkman — Temurin distribution
 # Dynamically resolves the latest patch for each major so this stays current
 source "$HOME/.sdkman/bin/sdkman-init.sh"
