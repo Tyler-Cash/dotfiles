@@ -18,8 +18,11 @@ brew install glab
 brew install gh
 {{ end -}}
 
+# sdkman requires Bash 4+ — macOS ships Bash 3.2, so use the Homebrew-installed bash
+brew install bash
+
 if [[ ! -d "$HOME/.sdkman" ]]; then
-  curl -s "https://get.sdkman.io" | bash
+  curl -s "https://get.sdkman.io" | /opt/homebrew/bin/bash
 fi
 
 sdkman_config="$HOME/.sdkman/etc/config"
