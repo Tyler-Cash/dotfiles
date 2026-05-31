@@ -39,6 +39,9 @@ alias gl='glab'
 # Smarter cd
 eval "$(zoxide init zsh)"
 
+# Per-directory env vars (.envrc files)
+eval "$(direnv hook zsh)"
+
 # History
 HISTSIZE=50000
 SAVEHIST=50000

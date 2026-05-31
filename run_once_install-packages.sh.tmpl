@@ -12,6 +12,8 @@ set -e
 brew install \
   eza bat ripgrep fd fzf zoxide jq \
   kubectl kubectx helm starship fnm \
+  tfenv kind \
+  git-delta lazygit bottom direnv \
   zsh-autosuggestions \
   zsh-syntax-highlighting \
   zsh-history-substring-search \
@@ -19,11 +21,10 @@ brew install \
   forgit \
   zsh-you-should-use
 
-brew tap hashicorp/tap
-brew install hashicorp/tap/terraform
+tfenv install latest && tfenv use latest
 
 {{ if eq .machine "work" -}}
-brew install glab
+brew install glab 1password-cli
 {{ else -}}
 brew install gh bitwarden-cli
 bw config server https://bitwarden.tylercash.dev
@@ -74,6 +75,8 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install \
   eza bat ripgrep fd fzf zoxide jq \
   kubectl kubectx helm starship fnm \
+  tfenv kind \
+  git-delta lazygit bottom direnv \
   zsh-autosuggestions \
   zsh-syntax-highlighting \
   zsh-history-substring-search \
@@ -81,6 +84,8 @@ brew install \
   forgit \
   zsh-you-should-use \
   gh
+
+tfenv install latest && tfenv use latest
 
 if [[ ! -d "$HOME/.sdkman" ]]; then
   curl -s "https://get.sdkman.io" | bash
