@@ -51,21 +51,14 @@ setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
 # Prompt
 eval "$(starship init zsh)"
 
-# Secrets — rendered at chezmoi apply time, never stored in git.
-# Run chezmoi apply again after authenticating to pick up secrets.
-{{- $bwUnlocked := false }}
-{{- if env "BW_SESSION" }}
-{{-   if contains "unlocked" (output "sh" "-c" "bw status 2>/dev/null || echo ''") }}
-{{-     $bwUnlocked = true }}
-{{-   end }}
-{{- end }}
+# Secrets — written to ~/.secrets by bwu (home) or op (work) after authenticating.
+# Run bwu to refresh. Never committed.
 {{- if eq .machine "work" }}
 {{- if lookPath "op" }}
 export GITHUB_TOKEN={{ onepasswordRead "op://Personal/GitHub Token/credential" | quote }}
 {{- end }}
-{{- else if $bwUnlocked }}
-export GITHUB_TOKEN={{ (bitwarden "item" "github-token").login.password | quote }}
 {{- end }}
+[[ -f ~/.secrets ]] && source ~/.secrets
 
 # Local overrides — machine-specific env vars and secrets, never committed
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

@@ -1,9 +1,9 @@
-{{- $bwUnlocked := false }}
-{{- if env "BW_SESSION" }}
-{{-   if contains "unlocked" (output "sh" "-c" "bw status 2>/dev/null || echo ''") }}
-{{-     $bwUnlocked = true }}
-{{-   end }}
-{{- end }}
+{{- $bwUnlocked := false -}}
+{{- if env "BW_SESSION" -}}
+{{-   if ne (output "sh" "-c" "bw list folders --nointeraction 2>/dev/null | head -c 2 || echo ''") "" -}}
+{{-     $bwUnlocked = true -}}
+{{-   end -}}
+{{- end -}}
 {{ if or (eq .machine "work") (not $bwUnlocked) }}
 .ssh/id_ed25519
 .ssh/id_ed25519.pub
