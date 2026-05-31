@@ -30,6 +30,21 @@ if [[ -f "$sdkman_config" ]] && grep -q 'sdkman_auto_env=false' "$sdkman_config"
   sed -i '' 's/sdkman_auto_env=false/sdkman_auto_env=true/' "$sdkman_config"
 fi
 
+# Install Java LTS versions (21 and 25) via sdkman — Temurin distribution
+# Dynamically resolves the latest patch for each major so this stays current
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+for major in 21 25; do
+  id=$(sdk list java 2>/dev/null | grep -Eo "${major}\.[0-9.]+-tem" | head -1)
+  [[ -n "$id" ]] && { SDKMAN_AUTO_ANSWER=true sdk install java "$id" || true; }
+done
+latest25=$(sdk list java 2>/dev/null | grep -Eo "25\.[0-9.]+-tem" | head -1)
+[[ -n "$latest25" ]] && sdk default java "$latest25"
+
+# Install Node LTS via fnm and set as default
+eval "$(fnm env --shell bash)"
+fnm install --lts
+fnm default "$(fnm list | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -1)"
+
 {{ else if .isWSL -}}
 # System packages (wslu provides wslview for opening URLs/files in Windows)
 sudo apt-get update -qq
@@ -60,4 +75,18 @@ sdkman_config="$HOME/.sdkman/etc/config"
 if [[ -f "$sdkman_config" ]] && grep -q 'sdkman_auto_env=false' "$sdkman_config"; then
   sed -i 's/sdkman_auto_env=false/sdkman_auto_env=true/' "$sdkman_config"
 fi
+
+# Install Java LTS versions (21 and 25) via sdkman — Temurin distribution
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+for major in 21 25; do
+  id=$(sdk list java 2>/dev/null | grep -Eo "${major}\.[0-9.]+-tem" | head -1)
+  [[ -n "$id" ]] && { SDKMAN_AUTO_ANSWER=true sdk install java "$id" || true; }
+done
+latest25=$(sdk list java 2>/dev/null | grep -Eo "25\.[0-9.]+-tem" | head -1)
+[[ -n "$latest25" ]] && sdk default java "$latest25"
+
+# Install Node LTS via fnm and set as default
+eval "$(fnm env --shell bash)"
+fnm install --lts
+fnm default "$(fnm list | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -1)"
 {{ end -}}
