@@ -51,14 +51,13 @@ setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
 # Prompt
 eval "$(starship init zsh)"
 
-# Secrets — written to ~/.secrets by bwu (home) or op (work) after authenticating.
-# Run bwu to refresh. Never committed.
+# Secrets — loaded into memory only by bwu (home) or op (work), never written to disk.
+# Run bwu in any terminal that needs secrets.
 {{- if eq .machine "work" }}
 {{- if lookPath "op" }}
 export GITHUB_TOKEN={{ onepasswordRead "op://Personal/GitHub Token/credential" | quote }}
 {{- end }}
 {{- end }}
-[[ -f ~/.secrets ]] && source ~/.secrets
 
 # Local overrides — machine-specific env vars and secrets, never committed
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
