@@ -11,6 +11,8 @@ $line_break\
 $status\
 $character"""
 
+right_format = """$cmd_duration$time"""
+
 [directory]
 truncation_length = 3
 truncate_to_repo = true
@@ -46,8 +48,13 @@ symbol = "󱁢 "
 symbol = " "
 
 [cmd_duration]
-min_time = 2_000
-format = "took [$duration]($style) "
+min_time = 500
+format = "[$duration]($style) "
+
+[time]
+disabled = false
+format = "[$time]($style) "
+time_format = "%H:%M:%S"
 
 [status]
 disabled = false
