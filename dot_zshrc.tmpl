@@ -18,6 +18,9 @@ source "$XDG_CONFIG_HOME/zsh/plugins.zsh"
 source "$XDG_CONFIG_HOME/zsh/completions.zsh"
 source "$XDG_CONFIG_HOME/zsh/aliases.zsh"
 source "$XDG_CONFIG_HOME/zsh/functions.zsh"
+{{ if eq .machine "home" -}}
+source "$XDG_CONFIG_HOME/zsh/functions_home.zsh"
+{{ end -}}
 
 # Clipboard aliases
 {{ if eq .chezmoi.os "darwin" -}}
