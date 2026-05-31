@@ -48,9 +48,14 @@ eval "$(starship init zsh)"
 # Secrets — rendered at chezmoi apply time, never stored in git.
 # 1Password path format:  op://VaultName/ItemName/FieldName
 # Bitwarden format:        (bitwarden "item" "ItemName").login.password
-# Update these paths to match your actual vault structure before running chezmoi apply.
-{{ if eq .machine "work" -}}
+# Secrets are skipped if the secret manager is not authenticated — run chezmoi apply
+# again after authenticating (eval $(op signin) or export BW_SESSION=$(bw unlock --raw)).
+{{- if eq .machine "work" }}
+{{- if lookPath "op" }}
 export GITHUB_TOKEN={{ onepasswordRead "op://Personal/GitHub Token/credential" | quote }}
-{{ else -}}
+{{- end }}
+{{- else }}
+{{- if env "BW_SESSION" }}
 export GITHUB_TOKEN={{ (bitwarden "item" "github-token").login.password | quote }}
-{{ end -}}
+{{- end }}
+{{- end }}
