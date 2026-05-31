@@ -18,14 +18,43 @@ brew install glab
 brew install gh
 {{ end -}}
 
-# sdkman — install once, no-op if already present
 if [[ ! -d "$HOME/.sdkman" ]]; then
   curl -s "https://get.sdkman.io" | bash
 fi
 
-# Enable sdkman auto-env (auto-switch Java version on cd)
 sdkman_config="$HOME/.sdkman/etc/config"
 if [[ -f "$sdkman_config" ]] && grep -q 'sdkman_auto_env=false' "$sdkman_config"; then
   sed -i '' 's/sdkman_auto_env=false/sdkman_auto_env=true/' "$sdkman_config"
+fi
+
+{{ else if .isWSL -}}
+# System packages (wslu provides wslview for opening URLs/files in Windows)
+sudo apt-get update -qq
+sudo apt-get install -y build-essential curl git wslu
+
+# Homebrew for Linux — gives same tool versions as macOS; brew --prefix resolves correctly
+if ! command -v brew &>/dev/null; then
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+brew install \
+  eza bat ripgrep fd fzf zoxide jq \
+  kubectl kubectx helm starship fnm \
+  zsh-autosuggestions \
+  zsh-syntax-highlighting \
+  zsh-history-substring-search \
+  zsh-completions \
+  forgit \
+  zsh-you-should-use \
+  gh
+
+if [[ ! -d "$HOME/.sdkman" ]]; then
+  curl -s "https://get.sdkman.io" | bash
+fi
+
+sdkman_config="$HOME/.sdkman/etc/config"
+if [[ -f "$sdkman_config" ]] && grep -q 'sdkman_auto_env=false' "$sdkman_config"; then
+  sed -i 's/sdkman_auto_env=false/sdkman_auto_env=true/' "$sdkman_config"
 fi
 {{ end -}}
