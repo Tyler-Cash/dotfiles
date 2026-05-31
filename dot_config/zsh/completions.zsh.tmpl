@@ -1,6 +1,34 @@
 # Initialize completion system (fpath additions from plugins.zsh must happen before this)
 autoload -Uz compinit && compinit
 
+# Smart matching: case-insensitive → partial at separators (f.b → foo.bar) → substring
+zstyle ':completion:*' matcher-list \
+  'm:{a-zA-Z}={A-Za-z}' \
+  'r:|[._-]=* r:|=*' \
+  'l:|=* r:|=*'
+
+# Typo tolerance — up to 1 error (e.g. kubctl → kubectl)
+zstyle ':completion:*' completer _complete _approximate
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# Navigate completions with arrow keys
+zstyle ':completion:*' menu select
+
+# Group by type with headers
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}── %d ──%f'
+zstyle ':completion:*:warnings'     format '%F{red}── no matches ──%f'
+
+# Colour file completions using LS_COLORS
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Include dotfiles in completions
+zstyle ':completion:*' special-dirs true
+
+# Cache slow completions (kubectl resources, git branches, etc.)
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
+
 # Tool completions
 source <(kubectl completion zsh)
 source <(helm completion zsh)
