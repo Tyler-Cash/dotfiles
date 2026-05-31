@@ -1,0 +1,6 @@
+{{- $machine := promptStringOnce . "machine" "Machine type (work/home)" -}}
+{{- $isWSL := ne (env "WSL_DISTRO_NAME") "" -}}
+
+[data]
+  machine = {{ $machine | quote }}
+  isWSL = {{ $isWSL }}
