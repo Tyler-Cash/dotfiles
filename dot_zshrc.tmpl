@@ -1,0 +1,56 @@
+# XDG Base Directory
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+# Homebrew — on WSL, the brew binary isn't on PATH until explicitly added
+{{ if .isWSL -}}
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{ end -}}
+
+# Node version manager
+eval "$(fnm env --use-on-cd --shell zsh)"
+
+# Java version manager (sdkman_auto_env=true set by install script enables auto-switching)
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Zsh config modules (order matters: plugins before completions, both before aliases/functions)
+source "$XDG_CONFIG_HOME/zsh/plugins.zsh"
+source "$XDG_CONFIG_HOME/zsh/completions.zsh"
+source "$XDG_CONFIG_HOME/zsh/aliases.zsh"
+source "$XDG_CONFIG_HOME/zsh/functions.zsh"
+
+# Clipboard aliases
+{{ if eq .chezmoi.os "darwin" -}}
+alias copy='pbcopy'
+alias paste='pbpaste'
+{{ else if .isWSL -}}
+alias copy='clip.exe'
+alias paste='powershell.exe -command Get-Clipboard'
+{{ end -}}
+
+# Git hosting CLI alias (glab on work, gh accessed directly on home)
+{{ if eq .machine "work" -}}
+alias gl='glab'
+{{ end -}}
+
+# Smarter cd
+eval "$(zoxide init zsh)"
+
+# History
+HISTSIZE=50000
+SAVEHIST=50000
+HISTFILE="$HOME/.zsh_history"
+setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
+
+# Prompt
+eval "$(starship init zsh)"
+
+# Secrets — rendered at chezmoi apply time, never stored in git.
+# 1Password path format:  op://VaultName/ItemName/FieldName
+# Bitwarden format:        (bitwarden "item" "ItemName").login.password
+# Update these paths to match your actual vault structure before running chezmoi apply.
+{{ if eq .machine "work" -}}
+export GITHUB_TOKEN={{ onepasswordRead "op://Personal/GitHub Token/credential" | quote }}
+{{ else -}}
+export GITHUB_TOKEN={{ (bitwarden "item" "github-token").login.password | quote }}
+{{ end -}}
