@@ -1,6 +1,13 @@
 {{- $machine := promptStringOnce . "machine" "Machine type (work/home)" -}}
 {{- $isWSL := ne (env "WSL_DISTRO_NAME") "" -}}
+{{- $gitEmail := "" -}}
+{{- if eq $machine "work" -}}
+{{-   $gitEmail = promptStringOnce . "gitEmail" "Work email address" -}}
+{{- else -}}
+{{-   $gitEmail = "12643375+Tyler-Cash@users.noreply.github.com" -}}
+{{- end -}}
 
 [data]
   machine = {{ $machine | quote }}
   isWSL = {{ $isWSL }}
+  gitEmail = {{ $gitEmail | quote }}
