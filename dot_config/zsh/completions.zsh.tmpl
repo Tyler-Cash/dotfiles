@@ -1,0 +1,17 @@
+# Initialize completion system (fpath additions from plugins.zsh must happen before this)
+autoload -Uz compinit && compinit
+
+# Tool completions
+source <(kubectl completion zsh)
+source <(helm completion zsh)
+eval "$(fnm completions --shell zsh)"
+
+# Terraform uses complete, not source <(...)
+complete -o nospace -C "$(which terraform)" terraform
+
+# Machine-specific CLI completion
+{{ if eq .machine "work" -}}
+source <(glab completion -s zsh)
+{{ else -}}
+source <(gh completion -s zsh)
+{{ end -}}
