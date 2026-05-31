@@ -4,7 +4,7 @@ awssecret() {
   aws secretsmanager get-secret-value \
     --secret-id "$1" \
     --query SecretString \
-    --output text
+    --output text || return 1
 }
 
 # Create a directory and cd into it
