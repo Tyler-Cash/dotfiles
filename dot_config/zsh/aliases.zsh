@@ -38,6 +38,17 @@ alias top='btm'
 # direnv — quick allow shorthand
 alias da='direnv allow'
 
+# Better system defaults
+alias du='dust'
+alias df='duf'
+alias ps='procs'
+
+# tmux
+alias t='tmux'
+alias ta='tmux attach-session -t'
+alias tl='tmux list-sessions'
+alias tn='tmux new-session -s'
+
 # forgit interactive git (supplements the plain git aliases above)
 alias gla='forgit::log'       # interactive log with preview
 alias gda='forgit::diff'      # interactive diff with fzf

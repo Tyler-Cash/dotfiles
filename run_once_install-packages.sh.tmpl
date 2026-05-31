@@ -10,10 +10,13 @@ fi
 set -e
 
 brew install \
-  eza bat ripgrep fd fzf zoxide jq \
-  kubectl kubectx helm starship fnm \
+  eza bat ripgrep fd fzf zoxide jq yq \
+  kubectl kubectx helm k9s stern \
   tfenv kind \
+  awscli \
   git-delta lazygit bottom direnv \
+  dust duf xh procs tmux dive \
+  starship fnm \
   zsh-autosuggestions \
   zsh-syntax-highlighting \
   zsh-history-substring-search \
@@ -76,10 +79,13 @@ fi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 brew install \
-  eza bat ripgrep fd fzf zoxide jq \
-  kubectl kubectx helm starship fnm \
+  eza bat ripgrep fd fzf zoxide jq yq \
+  kubectl kubectx helm k9s stern \
   tfenv kind \
+  awscli \
   git-delta lazygit bottom direnv \
+  dust duf xh procs tmux dive \
+  starship fnm \
   zsh-autosuggestions \
   zsh-syntax-highlighting \
   zsh-history-substring-search \
