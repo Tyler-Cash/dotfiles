@@ -28,3 +28,18 @@ alias cz='chezmoi'
 alias czd='chezmoi diff'
 alias cza='chezmoi apply'
 alias cze='chezmoi edit'
+
+# lazygit
+alias lg='lazygit'
+
+# bottom — replaces system top with a richer monitor
+alias top='btm'
+
+# direnv — quick allow shorthand
+alias da='direnv allow'
+
+# forgit interactive git (supplements the plain git aliases above)
+alias gla='forgit::log'       # interactive log with preview
+alias gda='forgit::diff'      # interactive diff with fzf
+alias gaa='forgit::add'       # interactive staging
+alias gcoa='forgit::checkout_branch'  # interactive branch checkout
